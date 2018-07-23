@@ -1,0 +1,86 @@
+﻿@using PagedList;
+@using PagedList.Mvc;
+
+@model IPagedList<AWE_SS18_Gruppe_1.Models.Thesis>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Übersicht über die bewerteten Thesen</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.First().Programme.Name)
+        </th>
+        <th>
+            @Html.ActionLink("Betreuer", "Index", new { sorting = ViewBag.ApplicationUserSortParam })
+        </th>
+       
+        <th>
+            @Html.DisplayNameFor(model => model.First().Title)
+        </th>
+      
+        <th>
+            @Html.DisplayNameFor(model => model.First().StudentName)
+        </th>
+       
+        <th>
+            @Html.DisplayNameFor(model => model.First().Registration)
+        </th>
+        <th>
+            @Html.ActionLink("Abgabedatum", "Index", new { sorting = ViewBag.ApplicationUserSortParam })
+        </th>
+       
+        <th>
+            @Html.DisplayNameFor(model => model.First().Typ)
+        </th>
+        
+        <th>
+            @Html.DisplayNameFor(model => model.First().LastModified)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Programme.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.User.LastName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+       
+        <td>
+            @Html.DisplayFor(modelItem => item.StudentName)
+        </td>
+       
+        <td>
+            @Html.DisplayFor(modelItem => item.Registration)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Filing)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Typ)
+        </td>
+      
+        <td>
+            @Html.DisplayFor(modelItem => item.LastModified)
+        </td>
+        <td>
+            @Html.ActionLink("bearbeiten", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) 
+            
+        </td>
+    </tr>
+}
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }), PagedListRenderOptions.ClassicPlusFirstAndLast)
+
+
+</table>

@@ -79,6 +79,12 @@ namespace AWE_SS18_Gruppe_1.Models
         [Display(Name = "Kennwort bestätigen")]
         [Compare("Password", ErrorMessage = "Das Kennwort entspricht nicht dem Bestätigungskennwort.")]
         public string ConfirmPassword { get; set; }
+        
+        [Display(Name = "Vorname")]
+        public string FirstName { get; set; }
+        [Display(Name = "Nachname")]
+        public string LastName { get; set; }
+
     }
 
     public class ResetPasswordViewModel

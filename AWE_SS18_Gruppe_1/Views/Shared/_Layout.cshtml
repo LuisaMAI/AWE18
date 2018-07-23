@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - Meine ASP.NET-Anwendung</title>
+    <title>@ViewBag.Title - AWE 2018</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
@@ -18,13 +18,17 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Anwendungsname", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Thesis Plattform", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Startseite", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Info", "About", "Home")</li>
-                    <li>@Html.ActionLink("Kontakt", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Frei", "Index", "Open")</li>
+                    <li>@Html.ActionLink("Public", "Index", "Public")</li>
+                    <li>@Html.ActionLink("Angemeldet", "Index", "Registered")</li>
+                    <li>@Html.ActionLink("Abgegeben", "Index", "Filed")</li>
+                    <li>@Html.ActionLink("Bewertet", "Index", "Graded")</li>
+
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
@@ -34,7 +38,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - Meine ASP.NET-Anwendung</p>
+            <p>&copy; @DateTime.Now.Year - Advanced Web Engineering - Julius Maximilians-Universität Würzburg</p>
         </footer>
     </div>
 
