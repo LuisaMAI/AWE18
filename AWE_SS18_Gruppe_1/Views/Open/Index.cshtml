@@ -15,7 +15,8 @@
             @Html.DisplayNameFor(model => model.Programme.Name)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.User.LastName)
+            @Html.DisplayNameFor(model => model.User.LastName) 
+            
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Title)
@@ -45,7 +46,7 @@
             @Html.DisplayFor(modelItem => item.Programme.Name)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.User.LastName)
+            <a href="mailto:@Html.ValueFor(modelItem => item.User.UserName)">@Html.DisplayFor(modelItem => item.User.LastName)</a>
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Title)
@@ -61,7 +62,8 @@
             @Html.DisplayFor(modelItem => item.Status)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.StudentName)
+            <a href="mailto:@Html.ValueFor(modelItem => item.StudentEmail)">@Html.DisplayFor(modelItem => item.StudentName)</a>
+            
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.LastModified)
@@ -69,7 +71,6 @@
       
         <td>
             @Html.ActionLink("Bearbeiten", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
             @Html.ActionLink("Löschen", "Delete", new { id=item.Id })
         </td>
     </tr>

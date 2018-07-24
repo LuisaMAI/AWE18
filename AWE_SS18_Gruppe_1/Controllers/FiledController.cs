@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AWE_SS18_Gruppe_1.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace AWE_SS18_Gruppe_1.Controllers
 {
@@ -40,7 +42,11 @@ namespace AWE_SS18_Gruppe_1.Controllers
 
         public ActionResult Edit(int? id)
         {
-            if (Environment.UserDomainName != db.ThesisDb.Find(id).User.UserName)
+            Microsoft.AspNet.Identity.UserManager<ApplicationUser> user = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+            string user1 = user.FindById(User.Identity.GetUserId()).UserName;
+
+            var user2 = db.ThesisDb.Find(id).User.UserName;
+            if (user1 != user2)
             {
                 throw new Exception("Es dürfen nur selbst angelegte Thesen bearbeitet werden");
             }
@@ -64,11 +70,12 @@ namespace AWE_SS18_Gruppe_1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Title,Description,Bachelor,Master,Status,StudentName,StudentEmail,StudentID,Registration,Filing,Typ,Summary,Strenghts,Weaknesses,Evaluation,ContentVal,LayoutVal,StructureVal,StyleVal,LiteraturVal,DifficultyVal,NoveltyVal,RichnessVal,ContentWt,LayoutWt,StructureWt,StyleWt,LiteratureWt,DifficultyWt,NoveltyWt,RichnessWt,Grade,LastModified,ProgrammeID")] Thesis thesis)
         {
+            thesis.LastModified = DateTime.Now;
+            thesis.Status = Status.bewertet;
             if (ModelState.IsValid)
             {
 
-                thesis.LastModified = DateTime.Now;
-                thesis.Status = Status.bewertet;
+               
                 db.Entry(thesis).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -77,9 +84,9 @@ namespace AWE_SS18_Gruppe_1.Controllers
             return View(thesis);
         }
         //Methode berechnet die Noten
-        JsonResult Calculation(string ContentVal, string LayoutVal, string StructureVal, string StyleVal, string LiteratureVal, string DifficultyVal, string NoveltyVal, string RichnessVal)
+        JsonResult Calculation (string ContentVal, string LayoutVal, string StructureVal, string StyleVal, string LiteratureVal, string DifficultyVal, string NoveltyVal, string RichnessVal, string ContentWt, string LayoutWt,string StrucutreWt, string StyleWt,string LiteratureWt,string DifficultyWt, string NoveltyWt, string RichnessWt )
         {
-            int content, layout, structure, style, literature, difficulty, novelty, richness;
+            int content, layout, structure, style, literature, difficulty, novelty, richness, contentWt, layoutWt, strucutreWt, styleWt, literatureWt, difficultyWt, noveltyWt, richnessWt;
             string result = "undefined";
             if (!int.TryParse(ContentVal, out content))
                 return Json(result, JsonRequestBehavior.AllowGet);
@@ -97,8 +104,24 @@ namespace AWE_SS18_Gruppe_1.Controllers
                 return Json(result, JsonRequestBehavior.AllowGet);
             if (!int.TryParse(RichnessVal, out richness))
                 return Json(result, JsonRequestBehavior.AllowGet);
-            // Hier fehlen noch die Gewichte
-            double wert = (content + layout + structure + style + literature + difficulty + novelty + richness) / 8;
+            if (!int.TryParse(ContentWt, out contentWt))
+                return Json(result, JsonRequestBehavior.AllowGet);
+            if (!int.TryParse(LayoutWt, out layoutWt))
+                return Json(result, JsonRequestBehavior.AllowGet);
+            if (!int.TryParse(StrucutreWt, out strucutreWt))
+                return Json(result, JsonRequestBehavior.AllowGet);
+            if (!int.TryParse(StyleWt, out styleWt))
+                return Json(result, JsonRequestBehavior.AllowGet);
+            if (!int.TryParse(LiteratureWt, out literatureWt))
+                return Json(result, JsonRequestBehavior.AllowGet);
+            if (!int.TryParse(DifficultyWt, out difficultyWt))
+                return Json(result, JsonRequestBehavior.AllowGet);
+            if (!int.TryParse(NoveltyWt, out noveltyWt))
+                return Json(result, JsonRequestBehavior.AllowGet);
+            if (!int.TryParse(RichnessWt, out richnessWt))
+                return Json(result, JsonRequestBehavior.AllowGet);
+            
+            double wert = (content*contentWt + layout*layoutWt + structure*strucutreWt + style*styleWt + literature*literatureWt + difficulty*difficultyWt + novelty*noveltyWt + richness*richnessWt) / 800;
             double wert2 = Math.Round(wert, 2);
 
             result = (wert2).ToString();

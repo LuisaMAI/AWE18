@@ -53,13 +53,14 @@ namespace AWE_SS18_Gruppe_1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Title,Description,Bachelor,Master,Status,LastModified,ProgrammeID")] Thesis thesis)
         {
+            Microsoft.AspNet.Identity.UserManager<ApplicationUser> user = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+            thesis.User = user.FindById(User.Identity.GetUserId());
+
             if (ModelState.IsValid)
             {
                 thesis.Status = Status.frei;
                 thesis.LastModified = DateTime.Now;
-                Microsoft.AspNet.Identity.UserManager<ApplicationUser> user = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
-                thesis.User = user.FindById(User.Identity.GetUserId());
-
+              
                 db.ThesisDb.Add(thesis);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -73,7 +74,11 @@ namespace AWE_SS18_Gruppe_1.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Edit(int? id)
         {
-            if (Environment.UserDomainName != db.ThesisDb.Find(id).User.UserName)
+            Microsoft.AspNet.Identity.UserManager<ApplicationUser> user = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+            string user1 = user.FindById(User.Identity.GetUserId()).UserName;
+
+            var user2 = db.ThesisDb.Find(id).User.UserName;
+            if (user1 != user2)
             {
                 throw new Exception("Es dürfen nur selbst angelegte Thesen geändert werden");
             }
@@ -112,7 +117,11 @@ namespace AWE_SS18_Gruppe_1.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Delete(int? id)
         {
-            if (Environment.UserDomainName != db.ThesisDb.Find(id).User.UserName)
+            Microsoft.AspNet.Identity.UserManager<ApplicationUser> user = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+            string user1 = user.FindById(User.Identity.GetUserId()).UserName;
+
+            var user2 = db.ThesisDb.Find(id).User.UserName;
+            if (user1 !=user2)
             {
                 throw new Exception("Es dürfen nur selbst angelegte Thesen gelöscht werden");
             }

@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AWE_SS18_Gruppe_1.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace AWE_SS18_Gruppe_1.Controllers
 {
@@ -40,7 +42,11 @@ namespace AWE_SS18_Gruppe_1.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Edit(int? id)
         {
-            if (Environment.UserDomainName != db.ThesisDb.Find(id).User.UserName)
+            Microsoft.AspNet.Identity.UserManager<ApplicationUser> user = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+            string user1 = user.FindById(User.Identity.GetUserId()).UserName;
+
+            var user2 = db.ThesisDb.Find(id).User.UserName;
+            if (user1 != user2)
             {
                 throw new Exception("Es dürfen nur selbst angelegte Thesen bearbeitet werden");
             }
@@ -64,6 +70,9 @@ namespace AWE_SS18_Gruppe_1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Title,Description,Bachelor,Master,Status,StudentName,StudentEmail,StudentID,Registration,Filing,Typ,Summary,Strenghts,Weaknesses,Evaluation,ContentVal,LayoutVal,StructureVal,StyleVal,LiteraturVal,DifficultyVal,NoveltyVal,RichnessVal,ContentWt,LayoutWt,StructureWt,StyleWt,LiteratureWt,DifficultyWt,NoveltyWt,RichnessWt,Grade,LastModified,ProgrammeID")] Thesis thesis)
         {
+            thesis.Status = Status.abgegeben;
+            thesis.LastModified = DateTime.Now;
+
             if (ModelState.IsValid)
             {
                 thesis.LastModified = DateTime.Now;

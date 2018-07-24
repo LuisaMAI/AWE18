@@ -43,15 +43,15 @@
             @Html.DisplayFor(modelItem => item.Programme.Name)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.User.LastName)
-        </td>
+            <a href="mailto:@Html.ValueFor(modelItem => item.User.UserName)">@Html.DisplayFor(modelItem => item.User.LastName)</a>
+</td>
         <td>
             @Html.DisplayFor(modelItem => item.Title)
         </td>
        
         <td>
-            @Html.DisplayFor(modelItem => item.StudentName)
-        </td>
+            <a href="mailto:@Html.ValueFor(modelItem => item.StudentEmail)">@Html.DisplayFor(modelItem => item.StudentName)</a>
+</td>
         
         <td>
             @Html.DisplayFor(modelItem => item.Filing)

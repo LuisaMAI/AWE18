@@ -8,6 +8,9 @@ using System.Web;
 using System.Web.Mvc;
 using AWE_SS18_Gruppe_1.Models;
 using PagedList;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Rotativa;
 
 namespace AWE_SS18_Gruppe_1.Controllers
 {
@@ -19,7 +22,7 @@ namespace AWE_SS18_Gruppe_1.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Index(int? Page, string sortOrder)
         {
-           
+            
             //hier nur bewertete Thesen übergeben
             List<Thesis> thesisliste = new List<Thesis>();
             var thesisDb = db.ThesisDb.Include(t => t.Programme).Include(t => t.User);
@@ -30,15 +33,15 @@ namespace AWE_SS18_Gruppe_1.Controllers
                     thesisliste.Add(thesis);
                 }
             }
+            ViewBag.CurrentSort = sortOrder;
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
-            var thesen = from t in db.ThesisDb
+            var thesen = from t in thesisliste
                          select t;
             switch (sortOrder)
             {
                 case "name_desc":
                     thesen = thesen.OrderByDescending(t => t.User.LastName);
-
                     break;
                 case "Date":
                     thesen = thesen.OrderBy(t => t.Filing);
@@ -54,7 +57,7 @@ namespace AWE_SS18_Gruppe_1.Controllers
             int page = Page ?? 1;
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
-            return View(thesen.OrderBy(x => x.Id).ToPagedList(page, 15));
+            return View(thesen.ToPagedList(page, 15));
 
         }
 
@@ -74,12 +77,24 @@ namespace AWE_SS18_Gruppe_1.Controllers
             return View(thesis);
         }
 
+        public ActionResult DownloadPDF(Thesis thesisPDF)
+        {
+            return new Rotativa.MVC.ViewAsPdf("Details", thesisPDF)
+            {
+                FileName = "thesispdf.pdf"
+            };
+        }
+       
 
         // GET: Graded/Edit/5
         [Authorize(Roles = "Admin")]
         public ActionResult Edit(int? id)
         {
-            if (Environment.UserDomainName != db.ThesisDb.Find(id).User.UserName)
+            Microsoft.AspNet.Identity.UserManager<ApplicationUser> user = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+            string user1 = user.FindById(User.Identity.GetUserId()).UserName;
+
+            var user2 = db.ThesisDb.Find(id).User.UserName;
+            if (user1 != user2)
             {
                 throw new Exception("Es dürfen nur selbst angelegte Thesen bearbeitet werden");
             }

@@ -87,18 +87,18 @@ namespace AWE_SS18_Gruppe_1.Models
         public bool Master { get; set; }
         [Required]
         public Status Status { get; set; } = default(Status);
-        [Display(Name = "Name Studenten")]
+        [Display(Name = "Name Student")]
         public string StudentName { get; set; }
         [DataType(DataType.EmailAddress)]
         [EmailAddress]
-        [Display(Name = "Email Studenten")]
+        [Display(Name = "Email Student")]
         public string StudentEmail { get; set; }
         [Display(Name = "Matrikelnummer")]
         public string StudentID { get; set; }
         [Display(Name = "Anmeldedatum")]
-        public DateTime? Registration { get; set; } = default(DateTime);
+        public DateTime? Registration { get; set; }
         [Display(Name = "Abgabedatum")]
-        public DateTime? Filing { get; set; } = default(DateTime);
+        public DateTime? Filing { get; set; }
 
         public Typ Typ { get; set; }
         [DataType(DataType.MultilineText)]
@@ -170,7 +170,7 @@ namespace AWE_SS18_Gruppe_1.Models
         [Required]
         [Display(Name = "Letzte Änderung")]
         public DateTime LastModified { get; set; } = DateTime.Now;
-
+        [Display(Name = "Programm")]
         public int ProgrammeID { get; set; }
         public virtual Programme Programme { get; set; }
 
@@ -186,7 +186,7 @@ namespace AWE_SS18_Gruppe_1.Models
 
                 if (Title == null) res.Add(new ValidationResult("Es muss ein Titel für die Arbeit angegeben werden.", new[] { "Title" }));
                 if (Description == null) res.Add(new ValidationResult("Es muss eine Beschreibung angegeben werden.", new[] { "Description" }));
-
+               
             }
             else if (Status.Equals(Status.reserviert))
             {
@@ -236,7 +236,7 @@ namespace AWE_SS18_Gruppe_1.Models
 
                 //Hier wird Berechnet, ob die Gewichtungen in Summe 100 ergeben
             }
-            int? summeBewertung = ContentWt + LayoutWt + LiteratureWt + StructureWt + StyleWt + LiteratureWt + DifficultyWt + NoveltyWt + RichnessWt;
+            int? summeBewertung = ContentWt + LayoutWt + LiteratureWt + StructureWt + StyleWt +  DifficultyWt + NoveltyWt + RichnessWt;
             if (summeBewertung != 100)
             {
                 res.Add(new ValidationResult("Es gab einen Fehler bei der Gewichtung der Bewertungseinheiten.", new[] { "ContentWt", "LayoutWt", "LiteratureWt", "StructureWt", "StyleWt", "LiteratureWt", "DifficultyWt", "NoveltyWt", "RichnessWt" }));
