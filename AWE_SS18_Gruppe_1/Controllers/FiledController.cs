@@ -83,51 +83,7 @@ namespace AWE_SS18_Gruppe_1.Controllers
             ViewBag.ProgrammeID = new SelectList(db.ProgrammeDB, "Id", "Name", thesis.ProgrammeID);
             return View(thesis);
         }
-        //Methode berechnet die Noten
-        JsonResult Calculation (string ContentVal, string LayoutVal, string StructureVal, string StyleVal, string LiteratureVal, string DifficultyVal, string NoveltyVal, string RichnessVal, string ContentWt, string LayoutWt,string StrucutreWt, string StyleWt,string LiteratureWt,string DifficultyWt, string NoveltyWt, string RichnessWt )
-        {
-            int content, layout, structure, style, literature, difficulty, novelty, richness, contentWt, layoutWt, strucutreWt, styleWt, literatureWt, difficultyWt, noveltyWt, richnessWt;
-            string result = "undefined";
-            if (!int.TryParse(ContentVal, out content))
-                return Json(result, JsonRequestBehavior.AllowGet);
-            if (!int.TryParse(LayoutVal, out layout))
-                return Json(result, JsonRequestBehavior.AllowGet);
-            if (!int.TryParse(StructureVal, out structure))
-                return Json(result, JsonRequestBehavior.AllowGet);
-            if (!int.TryParse(StyleVal, out style))
-                return Json(result, JsonRequestBehavior.AllowGet);
-            if (!int.TryParse(LiteratureVal, out literature))
-                return Json(result, JsonRequestBehavior.AllowGet);
-            if (!int.TryParse(DifficultyVal, out difficulty))
-                return Json(result, JsonRequestBehavior.AllowGet);
-            if (!int.TryParse(NoveltyVal, out novelty))
-                return Json(result, JsonRequestBehavior.AllowGet);
-            if (!int.TryParse(RichnessVal, out richness))
-                return Json(result, JsonRequestBehavior.AllowGet);
-            if (!int.TryParse(ContentWt, out contentWt))
-                return Json(result, JsonRequestBehavior.AllowGet);
-            if (!int.TryParse(LayoutWt, out layoutWt))
-                return Json(result, JsonRequestBehavior.AllowGet);
-            if (!int.TryParse(StrucutreWt, out strucutreWt))
-                return Json(result, JsonRequestBehavior.AllowGet);
-            if (!int.TryParse(StyleWt, out styleWt))
-                return Json(result, JsonRequestBehavior.AllowGet);
-            if (!int.TryParse(LiteratureWt, out literatureWt))
-                return Json(result, JsonRequestBehavior.AllowGet);
-            if (!int.TryParse(DifficultyWt, out difficultyWt))
-                return Json(result, JsonRequestBehavior.AllowGet);
-            if (!int.TryParse(NoveltyWt, out noveltyWt))
-                return Json(result, JsonRequestBehavior.AllowGet);
-            if (!int.TryParse(RichnessWt, out richnessWt))
-                return Json(result, JsonRequestBehavior.AllowGet);
-            
-            double wert = (content*contentWt + layout*layoutWt + structure*strucutreWt + style*styleWt + literature*literatureWt + difficulty*difficultyWt + novelty*noveltyWt + richness*richnessWt) / 800;
-            double wert2 = Math.Round(wert, 2);
-
-            result = (wert2).ToString();
-
-            return Json(result, JsonRequestBehavior.AllowGet);
-        }
+      
 
         // POST: Filed/Delete/5
         [HttpPost, ActionName("Delete")]

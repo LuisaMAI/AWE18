@@ -137,7 +137,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.ContentVal, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.ContentVal, new SelectList(new List<int>() { 1, 2, 3, 4, 5 }), new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.ContentVal, new SelectList(new List<int>() { 1, 2, 3, 4,5 }), new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.ContentVal, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -311,6 +311,7 @@
             $(document).ready(function () {
                 // kendo Funktionalität für die DropDownList
                 $("#Status").kendoDropDownList();
+                $("#Typ").kendoDropDownList();
                 $("#ContentVal").kendoDropDownList();
                 $("#LayoutVal").kendoDropDownList();
                 $("#StructureVal").kendoDropDownList();
@@ -321,45 +322,52 @@
                 $("#RichnessVal").kendoDropDownList();
                 $("#Grade").kendoDropDownList();
                 $("#ProgrammeID").kendoDropDownList();
-                
+                $("#Registration").kendoDatePicker({
+                    culture: "de-DE",
+                    value: new Date()
+                });
+                $("#Filing").kendoDatePicker({
+                    culture: "de-DE",
+                    value: new Date()
+                });
 
 
 
         });
 
+
   
     // Berechnung Noten
-        $("#Rechnen").click(function () {
-            $.getJSON("@Url.Action("Calculation")", {
+            $("#Rechnen").click(function () {
+              //  alert($("#ContentVal").val() + $("#LayoutVal").val() + $("#StructureVal").val() + $("#StyleVal").val() + $("#LiteraturVal").val() + $("#DifficultyVal").val() + $("#NoveltyVal").val() + $("#RichnessVal").val() + $("#ContentWt").val() + $("#LayoutWt").val() + $("#StructureWt").val() + $("#StyleWt").val() + $("#LiteratureWt").val() + $("#DifficultyWt").val() + $("#NoveltyWt").val() + $("#RichnessWt").val());
+                var ContentVal = $("#ContentVal").val();
+                var LayoutVal = $("#LayoutVal").val();
+                var StructureVal = $("#StructureVal").val();
+                var StyleVal = $("#StyleVal").val();
+                var LiteratureVal = $("#LiteraturVal").val();
+                var DifficultyVal = $("#DifficultyVal").val();
+                var NoveltyVal = $("#NoveltyVal").val();
+                 var RichnessVal = $("#RichnessVal").val();
+                var ContentWt = $("#ContentWt").val();
+                var LayoutWt = $("#LayoutWt").val();
+                var StructureWt = $("#StructureWt").val();
+                var StyleWt = $("#StyleWt").val();
+                var LiteratureWt = $("#LiteratureWt").val();
+                var DifficultyWt = $("#DifficultyWt").val();
+                var NoveltyWt = $("#NoveltyWt").val();
+                var RichnessWt = $("#RichnessWt").val();
+                var result = 1;
                 
-                ContentVal: $("#ContentVal").val(),
-                LayoutVal: $("#LayoutVal").val(),
-                StructureVal: $("#StructureVal").val(),
-                StyleVal: $("#StyleVal").val(),
-                LiteratureVal: $("#LiteratureVal").val(),
-                DifficultyVal: $("#DifficultyVal").val(),
-                NoveltyVal: $("#NoveltyVal").val(),
-                RichnessVal: $("#RichnessVal").val(),
-                ContentWt: $("#ContentWt").val(),
-                LayoutWt: $("#LayoutWt").val(),
-                StructureWt: $("#StructureWt").val(),
-                StyleWt: $("#StyleWt").val(),
-                LiteratureWt: $("#LiteratureWt").val(),
-                DifficultyWt: $("#DifficultyWt").val(),
-                NoveltyWt: $("#NoveltyWt").val(),
-                RichnessWt: $("#RichnessWt").val,
-
-            },
-                function (data, status, jq) {
-                    var json = JSON.parse(data);
-                    if (json == null || json < 0 || json > 5) {
-                        alert('keine Berechnung möglich');
-                    } else {
+                result  = (ContentVal*ContentWt + LayoutVal*LayoutWt + StructureVal*StructureWt + StyleVal*StyleWt + LiteratureVal*LiteratureWt + DifficultyVal*DifficultyWt + NoveltyVal*NoveltyWt + RichnessVal*RichnessWt) / 100;
+                
+                if (result == null || json < 0 || json > 5) {
+                    alert("keine Berechnung möglich");
+                } else {
 
 
-                        $("#Ergebnis").val(json);
-                    }
-                })
+                    $("#Ergebnis").val(result);
+                }
+               
         });
     </script>
 }

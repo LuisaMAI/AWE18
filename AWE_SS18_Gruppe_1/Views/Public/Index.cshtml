@@ -34,9 +34,7 @@
         <th>
             @Html.DisplayNameFor(model => model.Typ)
         </th>
-       <th>
-           @Html.DisplayNameFor(model => model.Grade)
-       </th>
+     
         <th></th>
     </tr>
 
@@ -64,9 +62,7 @@
         <td>
             @Html.DisplayFor(modelItem => item.Typ)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Grade)
-        </td>
+       
         <td>
            
             @Html.ActionLink("Details", "Details", new { id=item.Id })

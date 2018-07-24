@@ -4,7 +4,7 @@
     ViewBag.Title = "Edit";
 }
 
-<h2>Edit</h2>
+<h2>Bearbeiten</h2>
 
 
 @using (Html.BeginForm())
@@ -133,12 +133,14 @@
 </div>
 
 
+
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <link rel="stylesheet" href="~/Content/kendo/2018.2.620/kendo.common-bootstrap.core.min.css" />
     <link rel="stylesheet" href="~/Content/kendo/2018.2.620/kendo.bootstrap.min.css" />
-
+    
     <script src="~/Scripts/kendo/2018.2.620/kendo.ui.core.min.js"></script>
+    <script src="~/Scripts/kendo/2018.2.620/cultures/kendo.culture.de-DE.min.js"></script>
     <script src="~/Scripts/kendo/2018.2.620/cultures/kendo.culture.de-DE.min.js"></script>
 
     <script>
@@ -155,11 +157,11 @@
 
                 $("#Status").kendoDropDownList();
 
-            $("#Typ").kendoDropDownList();
-            $("#ProgrammeID").kendoDropDownList();
+                $("#Typ").kendoDropDownList();
+                $("#ProgrammeID").kendoDropDownList();
 
 
-        });
+            });
 
-    </script>
+        })</script>
 }

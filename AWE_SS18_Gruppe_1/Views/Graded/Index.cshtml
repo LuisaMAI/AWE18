@@ -38,7 +38,9 @@
         <th>
             @Html.DisplayNameFor(model => model.First().Typ)
         </th>
-        
+        <th>
+            @Html.DisplayNameFor(model => model.First().Grade)
+        </th>
         <th>
             @Html.DisplayNameFor(model => model.First().LastModified)
         </th>
@@ -70,7 +72,9 @@
         <td>
             @Html.DisplayFor(modelItem => item.Typ)
         </td>
-      
+        <td>
+            @Html.DisplayFor(modelItem => item.Grade)
+        </td>
         <td>
             @Html.DisplayFor(modelItem => item.LastModified)
         </td>
