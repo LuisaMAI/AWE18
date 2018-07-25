@@ -14,7 +14,7 @@ namespace AWE_SS18_Gruppe_1.Models
     {
         [Display(Name = "Vorname")]
         public string FirstName { get; set; }
-        [Display(Name = "Nachname")]
+        [Display(Name = "Name Betreuer")]
         public string LastName { get; set; }
         public bool? Active { get; set; } = true;
         // Kann mehrere Thesen betreuen

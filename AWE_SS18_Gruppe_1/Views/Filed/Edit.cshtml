@@ -53,7 +53,6 @@
             </div>
         </div>
 
-
         <div class="form-group">
             @Html.LabelFor(model => model.StudentName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -310,6 +309,40 @@
     <script>
             $(document).ready(function () {
                 // kendo Funktionalität für die DropDownList
+                $("#ContentWt").kendoNumericTextBox({
+                    decimals: 0,
+                    max: 100,
+                    min: 1
+                   
+                });
+                $("#LayoutWt").kendoNumericTextBox({
+                    max: 100,
+                    min: 1
+                });
+                $("#StructureWt").kendoNumericTextBox({
+                    max: 100,
+                    min: 1
+                });
+                $("#StyleWt").kendoNumericTextBox({
+                    max: 100,
+                    min: 1
+                });
+                $("#LiteratureWt").kendoNumericTextBox({
+                    max: 100,
+                    min: 1
+                });
+                $("#DifficultyWt").kendoNumericTextBox({
+                    max: 100,
+                    min: 1
+                });
+                $("#NoveltyWt").kendoNumericTextBox({
+                    max: 100,
+                    min: 1
+                });
+                $("#RichnessWt").kendoNumericTextBox({
+                    max: 100,
+                    min: 1
+                });
                 $("#Status").kendoDropDownList();
                 $("#Typ").kendoDropDownList();
                 $("#ContentVal").kendoDropDownList();
@@ -322,6 +355,7 @@
                 $("#RichnessVal").kendoDropDownList();
                 $("#Grade").kendoDropDownList();
                 $("#ProgrammeID").kendoDropDownList();
+               
                 $("#Registration").kendoDatePicker({
                     culture: "de-DE",
                     value: new Date()
@@ -339,7 +373,6 @@
   
     // Berechnung Noten
             $("#Rechnen").click(function () {
-              //  alert($("#ContentVal").val() + $("#LayoutVal").val() + $("#StructureVal").val() + $("#StyleVal").val() + $("#LiteraturVal").val() + $("#DifficultyVal").val() + $("#NoveltyVal").val() + $("#RichnessVal").val() + $("#ContentWt").val() + $("#LayoutWt").val() + $("#StructureWt").val() + $("#StyleWt").val() + $("#LiteratureWt").val() + $("#DifficultyWt").val() + $("#NoveltyWt").val() + $("#RichnessWt").val());
                 var ContentVal = $("#ContentVal").val();
                 var LayoutVal = $("#LayoutVal").val();
                 var StructureVal = $("#StructureVal").val();
@@ -357,10 +390,15 @@
                 var NoveltyWt = $("#NoveltyWt").val();
                 var RichnessWt = $("#RichnessWt").val();
                 var result = 1;
-                
+                var Summe = 1;
+                Summe = ContentWt*1 + LayoutWt*1 + StructureWt*1 +StyleWt*1 + LiteratureWt*1 + DifficultyWt*1 + NoveltyWt*1 + RichnessWt*1;
+                if (Summe != 100) {
+                    alert("Die Gewichte sind in Summe größer als 100");
+                }
+
                 result  = (ContentVal*ContentWt + LayoutVal*LayoutWt + StructureVal*StructureWt + StyleVal*StyleWt + LiteratureVal*LiteratureWt + DifficultyVal*DifficultyWt + NoveltyVal*NoveltyWt + RichnessVal*RichnessWt) / 100;
                 
-                if (result == null || json < 0 || json > 5) {
+                if (result == null || result < 0 || result > 5) {
                     alert("keine Berechnung möglich");
                 } else {
 
